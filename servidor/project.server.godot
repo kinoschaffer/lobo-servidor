@@ -1,0 +1,6 @@
+config_version=5
+[application]
+config/name="Lobo Servidor"
+run/main_scene="res://servidor/salas.tscn"
+[rendering]
+renderer/rendering_method="gl_compatibility"

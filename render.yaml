@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: lobo-salas
+    runtime: docker
+    plan: free
+    dockerfilePath: ./servidor/Dockerfile
+    dockerContext: .
+    envVars:
+      - key: PORT
+        value: "10000"
+

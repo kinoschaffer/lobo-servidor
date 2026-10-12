@@ -1,0 +1,3 @@
+{$LOBO_DOMAIN} {
+    reverse_proxy game:9080
+}

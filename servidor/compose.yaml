@@ -1,0 +1,23 @@
+services:
+  game:
+    build:
+      context: ..
+      dockerfile: servidor/Dockerfile
+    restart: unless-stopped
+    expose: ["9080"]
+    environment:
+      PORT: "9080"
+  proxy:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      LOBO_DOMAIN: ${LOBO_DOMAIN:?Configurar dominio público}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  caddy_data:
+  caddy_config:
+

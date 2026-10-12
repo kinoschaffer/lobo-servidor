@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "ruleset_id": "lobo_core_v0_1",
+  "status": "implemented_offline_core_7_roles",
+  "written_date": "2026-10-09",
+  "reference": "Feign role-play mode",
+  "fidelity": {
+    "current_exact_replica_verified": false,
+    "description": "Especificación propuesta para Lobo. Distingue documentación histórica, observaciones comunitarias y decisiones del prototipo. No es una certificación de las reglas actuales de FEIGN."
+  },
+  "first_deck": {
+    "players": 8,
+    "shuffle": true,
+    "cards": [
+      {
+        "team": "innocent",
+        "role": "doctor"
+      },
+      {
+        "team": "innocent",
+        "role": "investigator"
+      },
+      {
+        "team": "innocent",
+        "role": "lookout"
+      },
+      {
+        "team": "innocent",
+        "role": "police"
+      },
+      {
+        "team": "innocent",
+        "role": "trapper"
+      },
+      {
+        "team": "innocent",
+        "role": "insane",
+        "apparent_role": "investigator"
+      },
+      {
+        "team": "impostor",
+        "role": "police"
+      },
+      {
+        "team": "impostor",
+        "role": "cleaner"
+      }
+    ]
+  },
+  "roles": [
+    {
+      "id": "doctor",
+      "name": "Médico",
+      "teams": [
+        "innocent"
+      ],
+      "stage": "core",
+      "action": "heal",
+      "description": "Cura ataques ordinarios de esta noche.",
+      "self_target": false,
+      "no_consecutive_target": true
+    },
+    {
+      "id": "insane",
+      "name": "Insano",
+      "teams": [
+        "innocent"
+      ],
+      "stage": "core",
+      "action": "apparent_ability",
+      "description": "Cree tener otra habilidad; resultados ficticios.",
+      "core_apparent_role": "investigator"
+    },
+    {
+      "id": "police",
+      "name": "Policía",
+      "teams": [
+        "innocent",
+        "impostor"
+      ],
+      "stage": "core",
+      "action": "block",
+      "description": "Impide una acción aún no ejecutada.",
+      "self_target": false,
+      "no_consecutive_target": true
+    },
+    {
+      "id": "lookout",
+      "name": "Vigía",
+      "teams": [
+        "innocent",
+        "impostor"
+      ],
+      "stage": "core",
+      "action": "watch",
+      "description": "Informa la cantidad de otros visitantes.",
+      "self_target": false
+    },
+    {
+      "id": "investigator",
+      "name": "Investigador",
+      "teams": [
+        "innocent",
+        "impostor"
+      ],
+      "stage": "core",
+      "action": "investigate",
+      "description": "Entrega dos candidatos de habilidad y bando.",
+      "self_target": false
+    },
+    {
+      "id": "trapper",
+      "name": "Trampero",
+      "teams": [
+        "innocent",
+        "impostor"
+      ],
+      "stage": "core",
+      "action": "trap",
+      "description": "Intercepta una visita posterior a la instalación.",
+      "self_target": false
+    },
+    {
+      "id": "cleaner",
+      "name": "Limpiador",
+      "teams": [
+        "impostor"
+      ],
+      "stage": "core",
+      "action": "clean",
+      "description": "Oculta permanentemente la identidad informativa.",
+      "self_target": false
+    },
+    {
+      "id": "snitch",
+      "name": "Informante",
+      "teams": [
+        "innocent",
+        "impostor"
+      ],
+      "stage": "later",
+      "action": "reveal",
+      "description": "Obtiene información del rol elegido.",
+      "details_status": "Verificar límites y versión vigente; información privada según patch 0.1.8."
+    },
+    {
+      "id": "provoker",
+      "name": "Provocador",
+      "teams": [
+        "innocent",
+        "impostor"
+      ],
+      "stage": "later",
+      "action": "add_votes",
+      "description": "Añade votos al objetivo.",
+      "details_status": "Verificar usos y excepción de victoria frente a un impostor."
+    },
+    {
+      "id": "tracker",
+      "name": "Rastreador",
+      "teams": [
+        "innocent",
+        "impostor"
+      ],
+      "stage": "later",
+      "action": "track",
+      "description": "Sigue los desplazamientos del objetivo.",
+      "details_status": "Referencia histórica oficial 0.3.0; confirmar excepciones actuales."
+    },
+    {
+      "id": "blamer",
+      "name": "Acusador",
+      "teams": [
+        "impostor"
+      ],
+      "stage": "later",
+      "action": "frame",
+      "description": "Manipula la identidad que otros observan.",
+      "details_status": "Precisar duración, usos y prioridad frente a limpieza."
+    },
+    {
+      "id": "survivor",
+      "name": "Superviviente",
+      "teams": [
+        "neutral"
+      ],
+      "stage": "later",
+      "action": "shield",
+      "description": "Busca llegar vivo al final.",
+      "details_status": "Definir protección, usos y victoria conjunta antes de habilitar."
+    },
+    {
+      "id": "serial_killer",
+      "name": "Asesino en serie",
+      "teams": [
+        "neutral"
+      ],
+      "stage": "later",
+      "action": "kill",
+      "description": "Busca una victoria individual mediante ataques.",
+      "details_status": "Revisar inmunidades, visitas y reglas finales."
+    },
+    {
+      "id": "bomber",
+      "name": "Dinamitero",
+      "teams": [
+        "neutral"
+      ],
+      "stage": "later",
+      "action": "bomb",
+      "description": "Prepara y detona bombas.",
+      "details_status": "Definir persistencia, protección y ataques simultáneos."
+    },
+    {
+      "id": "thief",
+      "name": "Ladrón",
+      "teams": [
+        "neutral"
+      ],
+      "stage": "later",
+      "action": "steal",
+      "description": "Roba la habilidad de otra persona.",
+      "details_status": "Definir transferencia de bando, estados y victoria."
+    },
+    {
+      "id": "haunter",
+      "name": "Espectro",
+      "teams": [
+        "neutral"
+      ],
+      "stage": "later",
+      "action": "haunt",
+      "description": "Actúa después de su expulsión.",
+      "details_status": "Hay divergencias entre anuncio histórico y wiki; verificar victoria vigente."
+    },
+    {
+      "id": "sorcerer",
+      "name": "Hechicero",
+      "teams": [
+        "neutral"
+      ],
+      "stage": "later",
+      "action": "guess_kill",
+      "description": "Ataca al acertar la identidad elegida.",
+      "details_status": "Referencia oficial histórica; confirmar fallo, inmunidades y victoria."
+    }
+  ],
+  "phases": [
+    "lobby",
+    "role_assignment",
+    "night_selection",
+    "night_resolution",
+    "dawn",
+    "discussion",
+    "vote",
+    "vote_resolution",
+    "endgame"
+  ],
+  "timers_seconds": {
+    "role_assignment": 12,
+    "night_selection": 30,
+    "dawn": 6,
+    "discussion": 90,
+    "vote": 30,
+    "endgame": null
+  },
+  "actions": {
+    "one_per_alive_player": true,
+    "impostor_choices": [
+      "kill",
+      "role_ability",
+      "pass"
+    ],
+    "impostor_kills": "individual",
+    "attack_self": false,
+    "attack_allies": false,
+    "ability_may_target_ally": true,
+    "no_input": "pass",
+    "may_edit_until_deadline": true,
+    "last_valid_action_wins": true,
+    "dead_players_cannot_act": true
+  },
+  "resolution": {
+    "basis": "snapshot_at_night_start",
+    "fixed_tiers_are_lobo_proposal": true,
+    "tier_order": [
+      "police_blocks",
+      "trap_placement",
+      "doctor_healing",
+      "cleaner_masking",
+      "ordinary_attacks",
+      "information_visits",
+      "information_reports",
+      "commit_deaths",
+      "private_results",
+      "check_victory"
+    ],
+    "within_tier_order": "seeded_shuffle_each_night",
+    "block_policy": "Cancela solo una acción pendiente; no revierte acciones ejecutadas.",
+    "trap_policy": {
+      "capacity": 1,
+      "expires": "end_of_night",
+      "intercepts": "arrivals_after_installation",
+      "installer_consumes_own_trap": false,
+      "trapped_visit_is_observable": true,
+      "blocked_visit_exists": false,
+      "can_intercept_insane_visit": true
+    },
+    "healing_policy": "Una cura efectiva evita todos los ataques ordinarios al objetivo esa noche. No resucita eliminados de rondas previas.",
+    "attacks_same_target": "Una sola muerte final y un solo cuerpo.",
+    "attacked_players_may_finish_actions": true,
+    "cleaned_identity": "unknown_until_endgame_even_if_alive",
+    "lookout": "Cuenta otros visitantes que llegaron; excluye al propio vigía. Incluye al atrapado y al Insano. No muestra identidades.",
+    "information_reports_after_all_visits": true,
+    "investigator_candidates": {
+      "kind": "role_and_team",
+      "count": 2,
+      "one_innocent_and_one_impostor": true,
+      "cleaned_target": "unknown",
+      "insane_target": "apparent_innocent_role",
+      "repeat_target_result": "stable_unless_information_identity_changes"
+    },
+    "insane": {
+      "owner_receives_real_role": false,
+      "apparent_role_in_first_deck": "investigator",
+      "effects_on_others": false,
+      "arrival_observable": true,
+      "reports": "Pares plausibles generados sin consultar la identidad real del objetivo; pueden acertar por casualidad.",
+      "blocked_or_trapped_feedback": "mismo formato que una acción real"
+    },
+    "target_repeat_policy": {
+      "applies_to": [
+        "heal",
+        "block"
+      ],
+      "next_night_if_previous_submission_valid": "forbidden",
+      "pass_breaks_streak": true
+    }
+  },
+  "vote": {
+    "living_players_only": true,
+    "one_vote_each": true,
+    "may_change_until_deadline": true,
+    "targets": "another_living_player_or_skip",
+    "missing_vote": "skip",
+    "elimination": "unique_candidate_max_greater_than_every_other_candidate_and_skip",
+    "tie": "no_elimination",
+    "maximum_eliminations": 1,
+    "rule_basis": "Ejemplos publicados en notas oficiales 0.1.8; no mayoría absoluta.",
+    "examples": [
+      {
+        "candidate_counts": [
+          3,
+          4
+        ],
+        "explicit_skip": 1,
+        "no_vote": 4,
+        "eliminated_candidate_index": null
+      },
+      {
+        "candidate_counts": [
+          3,
+          4
+        ],
+        "explicit_skip": 1,
+        "no_vote": 2,
+        "eliminated_candidate_index": 1
+      },
+      {
+        "candidate_counts": [
+          4,
+          4
+        ],
+        "explicit_skip": 1,
+        "no_vote": 1,
+        "eliminated_candidate_index": null
+      },
+      {
+        "candidate_counts": [
+          4,
+          2
+        ],
+        "explicit_skip": 1,
+        "no_vote": 3,
+        "eliminated_candidate_index": null
+      }
+    ]
+  },
+  "victory": {
+    "scope": "primer mazo sin neutrales",
+    "evaluate_after": [
+      "all_night_effects_committed",
+      "vote_resolution"
+    ],
+    "ordered_rules": [
+      {
+        "condition": "alive_total == 0",
+        "winner": "draw"
+      },
+      {
+        "condition": "alive_impostors == 0 and alive_innocents > 0",
+        "winner": "innocent"
+      },
+      {
+        "condition": "alive_impostors > 0 and alive_impostors >= alive_innocents",
+        "winner": "impostor"
+      },
+      {
+        "condition": "otherwise",
+        "winner": null
+      }
+    ],
+    "team_dead_members_share_win": true,
+    "parity_is_lobo_proposal": true
+  },
+  "visibility": {
+    "public": [
+      "player_name",
+      "avatar_color",
+      "seat_or_house",
+      "life_status_at_dawn",
+      "vote_totals"
+    ],
+    "owner_private": [
+      "apparent_role",
+      "team",
+      "allowed_actions",
+      "own_action_result",
+      "private_notes"
+    ],
+    "impostor_private": [
+      "living_impostor_ids",
+      "night_team_chat"
+    ],
+    "never_send_to_living_clients": [
+      "other_true_roles",
+      "all_night_actions",
+      "server_rng_seed",
+      "insane_assignment_flag"
+    ],
+    "death_reveal": "Rol y bando salvo identidad limpiada; Insano muestra rol aparente hasta final (propuesta pendiente de contraste).",
+    "true_roles_revealed_at": "endgame",
+    "dead_chat": "separado, nunca entrega mensajes ni audio a vivos",
+    "night_animation": "solo espectadores autorizados; no zoom global a casas ajenas",
+    "death_door_and_body_public_at": "dawn_after_final_death_commit",
+    "healed_player_body": false,
+    "cosmetic_role_disclosure": false
+  },
+  "pending_exact_fidelity": [
+    "Orden entre habilidades en la versión actual; prioridades y excepciones.",
+    "Resolución exacta de trampas múltiples y consumo por visitante.",
+    "Posibilidad de autoobjetivos y política de repetir tras bloqueo/pasar.",
+    "Generación precisa de las tarjetas del investigador.",
+    "Revelación del Insano al morir frente a al terminar.",
+    "Condición de victoria de impostores y excepciones de roles no incluidos.",
+    "Alcance actual de la votación y muerte/revelación según rol.",
+    "Reglas completas y balance de los diez roles diferidos."
+  ],
+  "sources": [
+    {
+      "id": "store",
+      "kind": "official_overview",
+      "url": "https://store.steampowered.com/app/1436990/Feign/?l=spanish"
+    },
+    {
+      "id": "patch018",
+      "kind": "official_historical_patch",
+      "url": "https://steamcommunity.com/games/1436990/announcements/detail/3114798182500803680"
+    },
+    {
+      "id": "patch023",
+      "kind": "official_historical_patch",
+      "url": "https://steamcommunity.com/games/1436990/announcements/detail/3105799861883978796"
+    },
+    {
+      "id": "patch030",
+      "kind": "official_historical_patch",
+      "url": "https://steamcommunity.com/games/1436990/announcements/detail/3350130288793566841"
+    },
+    {
+      "id": "guide",
+      "kind": "community_firsthand_guide_not_current_authority",
+      "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2640380608"
+    },
+    {
+      "id": "player_notes",
+      "kind": "community_firsthand_observations_not_current_authority",
+      "url": "https://note.com/kuraneo_master/n/nf880e8806495"
+    }
+  ]
+}
+
