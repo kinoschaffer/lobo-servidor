@@ -1,4 +1,5 @@
 extends Node
+const Cosmetics=preload("res://scripts/cosmeticos_v043.gd")
 const Session = preload("res://scripts/mesa_sesion_v040.gd")
 const LIMITS := {"role_assignment":90.0,"night":60.0,"dawn":60.0,"discussion":120.0,"vote":45.0}
 var tcp := TCPServer.new()
@@ -108,7 +109,7 @@ func _message(key: int, data: Dictionary) -> void:
             slot=room.members.size()
             var nickname := str(data.get("name","Jugador")).strip_edges().left(20)
             if nickname.is_empty(): nickname="Jugador "+str(slot+1)
-            room.members.append({"id":slot,"name":nickname,"token":Crypto.new().generate_random_bytes(32).hex_encode()})
+            room.members.append({"id":slot,"name":nickname,"token":Crypto.new().generate_random_bytes(32).hex_encode(),"cosmetics":Cosmetics.normalize(data.get("cosmetics",{}),slot)})
         p.room=code
         p.slot=slot
         _send(key,{"type":"joined","code":code,"id":slot,"token":room.members[slot].token})
@@ -150,14 +151,17 @@ func _broadcast(code: String) -> void:
         var online := false
         for key in connected:
             if int(peers[key].slot)==int(member.id): online=true
-        roster.append({"id":member.id,"name":member.name,"connected":online})
+        roster.append({"id":member.id,"name":member.name,"connected":online,"cosmetics":member.get("cosmetics",Cosmetics.normalize({},int(member.id)))})
     for key in connected:
         if room.session==null:
-            _send(key,{"type":"lobby","code":code,"members":roster,"host":key==connected[0]})
+            _send(key,{"type":"lobby","cosmetics_version":1,"code":code,"members":roster,"host":key==connected[0]})
         else:
             var filtered: Dictionary=room.session.view(int(peers[key].slot))
+            for person in filtered.roster:
+                var id:=int(person.id)
+                person["cosmetics"]=room.members[id].get("cosmetics",Cosmetics.normalize({},id)) if id<room.members.size() else Cosmetics.normalize({},id)
             filtered["seconds_left"]=maxf(0.0,float(LIMITS.get(str(room.session.engine.phase),0.0))-float(room.session.phase_seconds))
-            _send(key,{"type":"state","view":filtered,"code":code,"members":roster})
+            _send(key,{"type":"state","cosmetics_version":1,"view":filtered,"code":code,"members":roster})
 
 func _voice(key: int, packet: PackedByteArray) -> void:
     var p: Dictionary = peers[key]

@@ -5,7 +5,7 @@ RUN curl -fsSL "https://github.com/godotengine/godot-builds/releases/download/${
 WORKDIR /app
 COPY servidor/project.server.godot ./project.godot
 COPY servidor/salas.tscn servidor/salas_v040.gd ./servidor/
-COPY scripts/mesa_sesion_v040.gd scripts/partida_motor.gd ./scripts/
+COPY scripts/mesa_sesion_v040.gd scripts/partida_motor.gd scripts/cosmeticos_v043.gd ./scripts/
 COPY datos/reglas_v0_1.json ./datos/
 RUN useradd -m lobo && chown -R lobo:lobo /app
 USER lobo
